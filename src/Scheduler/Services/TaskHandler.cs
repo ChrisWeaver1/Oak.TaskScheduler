@@ -10,10 +10,10 @@ namespace Scheduler
     /// <summary>
     /// Tracks & executes individual tasks
     /// </summary>
-    public class TaskHandler
+    public class TaskHandler : ITaskHandler
     {
         private readonly ILogger<TaskHandler> logger;
-        private Dictionary<string, TaskTracker> tasks { get; set; } 
+        private Dictionary<string, TaskTracker> tasks { get; set; }
 
         public TaskHandler(ILogger<TaskHandler> logger)
         {
@@ -68,7 +68,7 @@ namespace Scheduler
             return;
         }
 
-        public bool shouldTaskStart(ITask task, ref TaskTracker tracker)
+        private bool shouldTaskStart(ITask task, ref TaskTracker tracker)
         {
             if (tracker.LastStarted == null && task.RunOnStartUp)
                 return true;

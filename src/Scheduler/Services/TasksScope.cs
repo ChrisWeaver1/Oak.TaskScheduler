@@ -11,7 +11,7 @@ namespace Scheduler
     /// <summary>
     /// Handles execution of a new task set in a new service scope
     /// </summary>
-    public class TasksScope
+    public class TasksScope : ITasksScope
     {
         private readonly ILogger<TasksScope> logger;
         private readonly TaskHandler taskHandler;
@@ -21,7 +21,7 @@ namespace Scheduler
 
         public TasksScope(
             ILogger<TasksScope> logger,
-            TaskHandler taskTracking, 
+            TaskHandler taskTracking,
             IEnumerable<ITask> tasks)
         {
             this.logger = logger;
