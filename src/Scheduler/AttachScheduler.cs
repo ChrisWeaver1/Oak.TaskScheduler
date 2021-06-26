@@ -16,8 +16,8 @@ namespace Scheduler
             }
 
             serviceCollection.AddHostedService<Scheduler>();
-            serviceCollection.AddSingleton<TaskHandler, TaskHandler>();
-            serviceCollection.AddScoped<TasksScope, TasksScope>();
+            serviceCollection.AddSingleton<ITaskHandler, TaskHandler>();
+            serviceCollection.AddScoped<ITasksScope, TasksScope>();
             serviceCollection.Configure<SchedulerOptions>(options);
         }
     }

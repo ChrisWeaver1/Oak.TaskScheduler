@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,18 +13,18 @@ namespace Scheduler
     public class TasksScope : ITasksScope
     {
         private readonly ILogger<TasksScope> logger;
-        private readonly TaskHandler taskHandler;
+        private readonly ITaskHandler taskHandler;
         private readonly IEnumerable<ITask> tasks;
 
         private Guid guid { get; set; }
 
         public TasksScope(
             ILogger<TasksScope> logger,
-            TaskHandler taskTracking,
+            ITaskHandler taskHandler,
             IEnumerable<ITask> tasks)
         {
             this.logger = logger;
-            this.taskHandler = taskTracking;
+            this.taskHandler = taskHandler;
             this.tasks = tasks;
             this.guid = Guid.NewGuid();
         }
