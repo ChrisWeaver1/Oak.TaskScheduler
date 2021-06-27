@@ -16,6 +16,8 @@ namespace Scheduler.Service
                 {
                     services.AddTransient<ITask, Task1>();
                     services.AddTransient<ITask, Task2>();
+                    services.AddTransient<ITask, Task3>();
+                    services.AddDbContext<DatabaseContext>();
 
                     services.AttachScheduler();
                 });
