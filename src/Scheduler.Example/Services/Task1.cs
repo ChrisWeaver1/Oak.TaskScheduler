@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Scheduler.Service
+namespace Scheduler.Example
 {
     public class Task1 : ITask
     {

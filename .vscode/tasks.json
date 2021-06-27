@@ -21,7 +21,13 @@
                 "publish",
                 "${workspaceFolder}/src/Scheduler.Example/Scheduler.Example.csproj",
                 "/property:GenerateFullPaths=true",
-                "/consoleloggerparameters:NoSummary"
+                "/consoleloggerparameters:NoSummary",
+                // "/property:outputtype=exe",
+                "/property:publishsinglefile=true",
+                "/property:runtimeidentifier=win-x64",
+                "/property:platformtarget=x64",
+                // "/property:includenativelibrariesforselfextract=true",
+                "--configuration=Release"
             ],
             "problemMatcher": "$msCompile"
         },

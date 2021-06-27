@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>net5.0</TargetFramework>
-    <UserSecretsId>dotnet-Scheduler-66E134BC-08DC-46AB-92C6-6DEE49FDDF46</UserSecretsId>    
+    <UserSecretsId>dotnet-Scheduler-66E134BC-08DC-46AB-92C6-6DEE49FDDF46</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

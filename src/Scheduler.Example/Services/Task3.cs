@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 
-namespace Scheduler.Service
+namespace Scheduler.Example
 {
     public class Task3 : ITask
     {
@@ -28,9 +28,10 @@ namespace Scheduler.Service
         {
             this.logger.LogInformation($"{this.Name} triggered [{this.guid.ToString()}]");
 
-            await context.Blogs.AddAsync(new Blog
+            await context.Log.AddAsync(new Log
             {
-                Url = DateTime.Now.ToString()
+                Identifier = this.Name,
+                Date = DateTime.Now
             });
 
             await context.SaveChangesAsync();

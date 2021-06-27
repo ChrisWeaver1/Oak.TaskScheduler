@@ -1,7 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
-namespace Scheduler.Service
+namespace Scheduler.Example
 {
     public class Program
     {
@@ -12,12 +12,19 @@ namespace Scheduler.Service
 
         public static IHostBuilder CreateHostBuilder(string[] args) =>
             Host.CreateDefaultBuilder(args)
+                .UseWindowsService(options =>
+                {
+                    options.ServiceName = "Task Scheduler Example";
+                })
                 .ConfigureServices((hostContext, services) =>
                 {
                     services.AddTransient<ITask, Task1>();
                     services.AddTransient<ITask, Task2>();
                     services.AddTransient<ITask, Task3>();
+                    services.Configure<DbOptions>(hostContext.Configuration.GetSection("Database"));
+                    
                     services.AddDbContext<DatabaseContext>();
+
 
                     services.AttachScheduler();
                 });
