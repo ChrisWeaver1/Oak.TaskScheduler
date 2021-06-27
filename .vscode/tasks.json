@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Scheduler.Service/Scheduler.Service.csproj",
+                "${workspaceFolder}/src/Scheduler.Example/Scheduler.Example.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Scheduler.Service/Scheduler.Service.csproj",
+                "${workspaceFolder}/src/Scheduler.Example/Scheduler.Example.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -32,7 +32,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/Scheduler.Service/Scheduler.Service.csproj",
+                "${workspaceFolder}/src/Scheduler.Example/Scheduler.Example.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
