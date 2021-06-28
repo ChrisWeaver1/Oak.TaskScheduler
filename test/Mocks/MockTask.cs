@@ -4,7 +4,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using System;
 
-namespace Scheduler.Test
+namespace Weav.TaskScheduler.Test
 {
     public class MockTasks
     {

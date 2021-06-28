@@ -3,7 +3,7 @@ using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using System;
 
-namespace Scheduler.Test
+namespace Weav.TaskScheduler.Test
 {
     public class MockServiceProvider
     {

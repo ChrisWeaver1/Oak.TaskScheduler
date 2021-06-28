@@ -43,6 +43,29 @@
                 "/consoleloggerparameters:NoSummary"
             ],
             "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "build library",
+            "command": "dotnet",
+            "type": "process",
+            "args": [
+                "build",
+                "${workspaceFolder}/src/Weav.TaskScheduler/Weav.TaskScheduler.csproj",
+                "--configuration=Release"
+            ],
+            "problemMatcher": "$msCompile"
+        },
+        {
+            "label": "pack",
+            "command": "dotnet",
+            "type": "process",
+            "dependsOn": [ "build library" ],
+            "args": [
+                "pack",
+                "${workspaceFolder}/src/Weav.TaskScheduler/Weav.TaskScheduler.csproj",
+                "--configuration=Release"
+            ],
+            "problemMatcher": "$msCompile"
         }
     ]
 }

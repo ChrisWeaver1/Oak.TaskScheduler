@@ -1,7 +1,7 @@
 using Moq;
 using Microsoft.Extensions.Options;
 
-namespace Scheduler.Test
+namespace Weav.TaskScheduler.Test
 {
     public class MockOptions
     {
