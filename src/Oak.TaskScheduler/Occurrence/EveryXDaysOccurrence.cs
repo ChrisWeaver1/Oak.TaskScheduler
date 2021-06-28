@@ -35,6 +35,8 @@ namespace Oak.TaskScheduler
 
             if ((next - from) > new TimeSpan(this.amount, 0, 0, 0 ,0))
                 next = next.AddDays(-this.amount);   
+            
+            return next;
         }
     }
 }
