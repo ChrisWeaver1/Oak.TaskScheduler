@@ -26,6 +26,8 @@ jobs:
       run: dotnet restore ./src/Weav.TaskScheduler/Weav.TaskScheduler.csproj
     - name: Build
       run: dotnet build --no-restore --configuration=Release ./src/Weav.TaskScheduler/Weav.TaskScheduler.csproj
+    - name: Test
+      run: dotnet test test/ --verbosity normal
     - name: Pack
       run: dotnet pack ./src/Weav.TaskScheduler/Weav.TaskScheduler.csproj
     - name: Publish
