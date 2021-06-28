@@ -13,7 +13,7 @@
     <RepositoryUrl>https://github.com/Oakc/TaskScheduler</RepositoryUrl>
     <PackageTags>tasks schedule cron</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
-    <Version>0.0.2</Version>
+    <Version>0.0.1</Version>
     <AssemblyName>Oak.TaskScheduler</AssemblyName>
     <PackageIcon></PackageIcon>
     <PublishRepositoryUrl>true</PublishRepositoryUrl>
