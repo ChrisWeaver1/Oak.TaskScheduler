@@ -5,23 +5,24 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 
-namespace Oak.TaskScheduler
+namespace Oak.TaskScheduler.Services
 {
     /// <summary>
-    /// Handles execution of a new task set in a new service scope
+    /// Handles execution of a new task set in a new service scope.
+    /// This will run through each of the tasks & pass them through to the TaskHandler
     /// </summary>
     public class TasksScope : ITasksScope
     {
         private readonly ILogger<TasksScope> logger;
         private readonly ITaskHandler taskHandler;
-        private readonly IEnumerable<ITask> tasks;
+        private readonly IEnumerable<IScheduledTask> tasks;
 
         private Guid guid { get; set; }
 
         public TasksScope(
             ILogger<TasksScope> logger,
             ITaskHandler taskHandler,
-            IEnumerable<ITask> tasks)
+            IEnumerable<IScheduledTask> tasks)
         {
             this.logger = logger;
             this.taskHandler = taskHandler;

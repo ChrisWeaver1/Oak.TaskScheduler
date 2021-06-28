@@ -8,7 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Extensions.Options;
 
-namespace Oak.TaskScheduler
+namespace Oak.TaskScheduler.Services
 {
     /// <summary>
     /// Scheduler background service. Handles asyncronous & concurrent execution of tasks 
@@ -30,18 +30,30 @@ namespace Oak.TaskScheduler
             this.options = options;
         }
 
-        private List<Task> activeTasks { get; set; } = new List<Task>();
-
+        /// <summary>
+        /// Action called on each iteration of loop
+        /// </summary>
         public Action OnIteration  { get; set; } = null;
+        /// <summary>
+        /// Action to be called when the scope limit is reached
+        /// </summary>
         public Action OnIterationScopesLimit { get; set; } = null;
 
-        private bool stop = false;
 
-        public async Task Start(CancellationToken stoppingToken)
+        private List<Task> activeTasks { get; set; } = new List<Task>();
+        private bool stop = false;
+        private CancellationToken stoppingToken;
+
+
+        /// <summary>
+        /// Start the scheduler
+        /// </summary>
+        public async Task Start(CancellationToken token)
         {
             this.stop = false;
+            this.stoppingToken = token;
 
-            while (!stoppingToken.IsCancellationRequested && !this.stop)
+            while (!this.stoppingToken.IsCancellationRequested && !this.stop)
             {
                 this.OnIteration?.Invoke();
 
@@ -53,7 +65,7 @@ namespace Oak.TaskScheduler
                     this.OnIterationScopesLimit?.Invoke();
 
                     this.logger.LogCritical($"Scheduler exceeeded loop execution limit of {this.options.Value.IterationScopeLimit}");
-                    await Task.Delay(this.options.Value.IterationDelayMs, stoppingToken);
+                    await Task.Delay(this.options.Value.IterationDelayMs, this.stoppingToken);
                     this.cleanActiveTasks();
                     continue;
                 }
@@ -65,19 +77,23 @@ namespace Oak.TaskScheduler
 
                     var scope = this.serviceProvider.CreateScope();
                     var tasksScope = scope.ServiceProvider.GetService<ITasksScope>();
-                    this.activeTasks.Add(tasksScope.Handle(scope, stoppingToken));
+                    this.activeTasks.Add(tasksScope.Handle(scope, this.stoppingToken));
                 }
                 catch (Exception ex)
                 {
                     this.logger.LogError(ex.ToString());
                 }
 
-                await Task.Delay(this.options.Value.IterationDelayMs, stoppingToken);
+                await Task.Delay(this.options.Value.IterationDelayMs, this.stoppingToken);
 
                 this.cleanActiveTasks();
             }
         }
 
+        /// <summary>
+        /// Break after finishing next loop iteration,
+        /// If you want to force stop the tasks, cancel the CancellationToken 
+        /// </summary>
         public void Stop()
         {
             this.stop = true;

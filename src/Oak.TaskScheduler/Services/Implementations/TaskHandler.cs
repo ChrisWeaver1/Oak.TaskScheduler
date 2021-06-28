@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Oak.TaskScheduler.Models;
 
-namespace Oak.TaskScheduler
+namespace Oak.TaskScheduler.Services
 {
     /// <summary>
     /// Tracks & executes individual tasks
@@ -24,7 +24,7 @@ namespace Oak.TaskScheduler
         /// <summary>
         /// Check, track & execute tasks if its time to
         /// </summary>
-        public async Task ExecuteTask(ITask task, CancellationToken token = default)
+        public async Task ExecuteTask(IScheduledTask task, CancellationToken token = default)
         {
             var tracker = this.retrieveTracker(task);
 
@@ -52,7 +52,7 @@ namespace Oak.TaskScheduler
             return;
         }
 
-        private void completeTask(ITask task, ref TaskTracker tracker)
+        private void completeTask(IScheduledTask task, ref TaskTracker tracker)
         {
             tracker.TaskCompleted(DateTime.UtcNow);
             this.logger.LogInformation($"Task Finished: {task.Name} [Completed: {tracker.Completed}, Errors: {tracker.Errors}, Average: {tracker.AverageRunTime.ToString()}, Next: {tracker.NextRun.ToString()}]");
@@ -60,7 +60,7 @@ namespace Oak.TaskScheduler
             return;
         }
 
-        private void taskError(ITask task, ref TaskTracker tracker)
+        private void taskError(IScheduledTask task, ref TaskTracker tracker)
         {
             tracker.TaskErrored(DateTime.UtcNow);
             this.logger.LogInformation($"Task Errored: {task.Name} [Completed: {tracker.Completed}, Errors: {tracker.Errors}, Average: {tracker.AverageRunTime.ToString()}, Next: {tracker.NextRun.ToString()}]");
@@ -68,7 +68,7 @@ namespace Oak.TaskScheduler
             return;
         }
 
-        private bool shouldTaskStart(ITask task, ref TaskTracker tracker)
+        private bool shouldTaskStart(IScheduledTask task, ref TaskTracker tracker)
         {
             if (tracker.LastStarted == null && task.RunOnStartUp)
                 return true;
@@ -86,7 +86,7 @@ namespace Oak.TaskScheduler
             return true;
         }
 
-        private TaskTracker retrieveTracker(ITask task)
+        private TaskTracker retrieveTracker(IScheduledTask task)
         {
             var tracker = this.tasks.GetValueOrDefault(task.Name);
 
@@ -103,7 +103,7 @@ namespace Oak.TaskScheduler
             return tracker;
         }
 
-        private DateTime getNextRun(ITask task, DateTime lastRun)
+        private DateTime getNextRun(IScheduledTask task, DateTime lastRun)
         {
             return task.Occurrence.Next(lastRun);
         }

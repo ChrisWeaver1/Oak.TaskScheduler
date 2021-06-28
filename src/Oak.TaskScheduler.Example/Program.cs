@@ -18,9 +18,9 @@ namespace Oak.TaskScheduler.Example
                 })
                 .ConfigureServices((hostContext, services) =>
                 {
-                    services.AddTransient<ITask, Task1>();
-                    services.AddTransient<ITask, Task2>();
-                    services.AddTransient<ITask, Task3>();
+                    services.AddTransient<IScheduledTask, Task1>();
+                    services.AddTransient<IScheduledTask, Task2>();
+                    services.AddTransient<IScheduledTask, Task3>();
                     services.Configure<DbOptions>(hostContext.Configuration.GetSection("Database"));
                     
                     services.AddDbContext<DatabaseContext>();

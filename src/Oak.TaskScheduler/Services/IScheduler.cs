@@ -1,7 +1,7 @@
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace Oak.TaskScheduler
+namespace Oak.TaskScheduler.Services
 {
     public interface IScheduler
     {

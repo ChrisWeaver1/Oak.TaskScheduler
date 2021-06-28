@@ -8,9 +8,9 @@ namespace Oak.TaskScheduler.Test
 {
     public class MockTasks
     {
-        public Mock<ITask> Default() 
+        public Mock<IScheduledTask> Default() 
         {
-            var mock = new Mock<ITask>();
+            var mock = new Mock<IScheduledTask>();
 
             mock.Setup(m => m.Name).Returns("Default");
             mock.Setup(m => m.RunOnStartUp).Returns(false);
@@ -19,9 +19,9 @@ namespace Oak.TaskScheduler.Test
             return mock;
         }
 
-        public Mock<ITask> Daily() 
+        public Mock<IScheduledTask> Daily() 
         {
-            var mock = new Mock<ITask>();
+            var mock = new Mock<IScheduledTask>();
 
             mock.Setup(m => m.Name).Returns("Daily");
             mock.Setup(m => m.RunOnStartUp).Returns(false);
@@ -30,9 +30,9 @@ namespace Oak.TaskScheduler.Test
             return mock;
         }
 
-        public Mock<ITask> Startup() 
+        public Mock<IScheduledTask> Startup() 
         {
-            var mock = new Mock<ITask>();
+            var mock = new Mock<IScheduledTask>();
 
             mock.Setup(m => m.Name).Returns("Startup");
             mock.Setup(m => m.RunOnStartUp).Returns(true);

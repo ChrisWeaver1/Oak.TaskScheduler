@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Oak.TaskScheduler.Services;
 
 namespace Oak.TaskScheduler
 {
@@ -8,7 +9,7 @@ namespace Oak.TaskScheduler
         /// <summary>
         /// Add Scheduler and other required services.
         /// </summary>
-        public static void AttachScheduler(this IServiceCollection serviceCollection, Action<SchedulerOptions> options = null)
+        public static void AttachHostedScheduler(this IServiceCollection serviceCollection, Action<SchedulerOptions> options = null)
         {
             if (options == null)
             {

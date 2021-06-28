@@ -7,10 +7,10 @@
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Authors>Chris (@chrisOaker1)</Authors>
     <Company>-</Company>
-    <PackageProjectUrl>https://github.com/Oakc/TaskScheduler</PackageProjectUrl>
+    <PackageProjectUrl>https://github.com/weavc/Oak.TaskScheduler</PackageProjectUrl>
     <Description></Description>
     <Summary></Summary>
-    <RepositoryUrl>https://github.com/Oakc/TaskScheduler</RepositoryUrl>
+    <RepositoryUrl>https://github.com/weavc/Oak.TaskScheduler</RepositoryUrl>
     <PackageTags>tasks schedule cron</PackageTags>
     <PackageReleaseNotes></PackageReleaseNotes>
     <AssemblyName>Oak.TaskScheduler</AssemblyName>

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Oak.TaskScheduler.Example
 {
-    public class Task3 : ITask
+    public class Task3 : IScheduledTask
     {
         private readonly ILogger<Task3> logger;
         private readonly DatabaseContext context;

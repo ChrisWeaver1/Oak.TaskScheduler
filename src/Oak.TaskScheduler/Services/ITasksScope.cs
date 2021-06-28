@@ -2,7 +2,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Oak.TaskScheduler
+namespace Oak.TaskScheduler.Services
 {
     public interface ITasksScope
     {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Oak.TaskScheduler
 {
-    public interface ITask
+    public interface IScheduledTask
     {
         string Name { get; }
         IOccurrence Occurrence{ get; }
