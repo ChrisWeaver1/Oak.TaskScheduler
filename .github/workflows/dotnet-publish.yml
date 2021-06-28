@@ -25,7 +25,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore ./src/Oak.TaskScheduler/Oak.TaskScheduler.csproj
     - name: Build
-      run: dotnet build --no-restore --configuration=Release ./src/Oak.TaskScheduler/Oak.TaskScheduler.csproj
+      run: dotnet build --no-restore --configuration=Release /property:Version=${{ steps.branch_name.outputs.SOURCE_TAG }} ./src/Oak.TaskScheduler/Oak.TaskScheduler.csproj
     - name: Test
       run: dotnet test test/ --verbosity normal
     - name: Pack
