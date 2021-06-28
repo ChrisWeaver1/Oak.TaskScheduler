@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: why cant I find my project file
-      run: ls -al ./src/Weav.TaskScheduler
+      run: ls -al ./src/
     - name: Restore dependencies
       run: dotnet restore ./src/Weav.TaskScheduler/Weav.TaskScheduler.csproj
     - name: Build
