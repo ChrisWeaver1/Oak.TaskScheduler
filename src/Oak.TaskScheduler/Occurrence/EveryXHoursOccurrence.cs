@@ -28,7 +28,13 @@ namespace Oak.TaskScheduler
         {
             var next = new DateTime(from.Year, from.Month, from.Day, 0, this.minuteOffset, 0);
             var hours = (from.Hour - (from.Hour % this.amount)) + this.amount;
-            return next.AddHours(hours);
+
+            next = next.AddHours(hours);
+
+            if ((next - from) > new TimeSpan(this.amount, 0, 0))
+                next = next.AddHours(-this.amount);   
+            
+            return next;
         }
     }
 }

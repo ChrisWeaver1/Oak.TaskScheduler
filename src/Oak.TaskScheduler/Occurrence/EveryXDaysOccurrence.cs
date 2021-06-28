@@ -31,7 +31,10 @@ namespace Oak.TaskScheduler
         {
             var next = new DateTime(from.Year, from.Month, 0, this.hourOffset, this.minuteOffset, 0);
             var days = (from.Day - (from.Day % this.amount)) + this.amount;
-            return next.AddDays(days);   
+            next = next.AddDays(days);
+
+            if ((next - from) > new TimeSpan(this.amount, 0, 0, 0 ,0))
+                next = next.AddDays(-this.amount);   
         }
     }
 }
