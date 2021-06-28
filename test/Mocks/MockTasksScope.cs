@@ -3,7 +3,7 @@ using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
 
-namespace Weav.TaskScheduler.Test
+namespace Oak.TaskScheduler.Test
 {
     public class MockTasksScope
     {

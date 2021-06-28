@@ -14,7 +14,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\src\Weav.TaskScheduler\Weav.TaskScheduler.csproj" />
+    <ProjectReference Include="..\src\Oak.TaskScheduler\Oak.TaskScheduler.csproj" />
   </ItemGroup>
 
 </Project>

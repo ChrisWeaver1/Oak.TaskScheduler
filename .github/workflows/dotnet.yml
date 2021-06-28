@@ -18,8 +18,8 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore ./src/Weav.TaskScheduler/Weav.TaskScheduler.csproj
+      run: dotnet restore ./src/Oak.TaskScheduler/Oak.TaskScheduler.csproj
     - name: Build
-      run: dotnet build --no-restore ./src/Weav.TaskScheduler/Weav.TaskScheduler.csproj
+      run: dotnet build --no-restore ./src/Oak.TaskScheduler/Oak.TaskScheduler.csproj
     - name: Test
       run: dotnet test test/ --verbosity normal

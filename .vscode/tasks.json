@@ -7,7 +7,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Scheduler.Example/Scheduler.Example.csproj",
+                "${workspaceFolder}/src/Oak.TaskScheduler.Example/Oak.TaskScheduler.Example.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -19,7 +19,7 @@
             "type": "process",
             "args": [
                 "publish",
-                "${workspaceFolder}/src/Scheduler.Example/Scheduler.Example.csproj",
+                "${workspaceFolder}/src/Oak.TaskScheduler.Example/Oak.TaskScheduler.Example.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary",
                 // "/property:outputtype=exe",
@@ -38,7 +38,7 @@
             "args": [
                 "watch",
                 "run",
-                "${workspaceFolder}/src/Scheduler.Example/Scheduler.Example.csproj",
+                "${workspaceFolder}/src/Oak.TaskScheduler.Example/Oak.TaskScheduler.Example.csproj",
                 "/property:GenerateFullPaths=true",
                 "/consoleloggerparameters:NoSummary"
             ],
@@ -50,7 +50,7 @@
             "type": "process",
             "args": [
                 "build",
-                "${workspaceFolder}/src/Weav.TaskScheduler/Weav.TaskScheduler.csproj",
+                "${workspaceFolder}/src/Oak.TaskScheduler/Oak.TaskScheduler.csproj",
                 "--configuration=Release"
             ],
             "problemMatcher": "$msCompile"
@@ -62,7 +62,7 @@
             "dependsOn": [ "build library" ],
             "args": [
                 "pack",
-                "${workspaceFolder}/src/Weav.TaskScheduler/Weav.TaskScheduler.csproj",
+                "${workspaceFolder}/src/Oak.TaskScheduler/Oak.TaskScheduler.csproj",
                 "--configuration=Release"
             ],
             "problemMatcher": "$msCompile"

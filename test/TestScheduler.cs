@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
 
-namespace Weav.TaskScheduler.Test
+namespace Oak.TaskScheduler.Test
 {
     public class TestScheduler
     {
