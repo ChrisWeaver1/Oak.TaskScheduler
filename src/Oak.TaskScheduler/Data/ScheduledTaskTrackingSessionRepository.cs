@@ -17,7 +17,10 @@ namespace Oak.TaskScheduler.Data
         {
             var t = this.data.ScheduledTaskTracking.FirstOrDefault(s => s.Name == task.Name);
             if (t == null)
-                t = new ScheduledTaskTracking { };
+            {
+                t = new ScheduledTaskTracking { Name = task.Name };
+                this.data.ScheduledTaskTracking.Add(t);
+            }
 
             return Task.FromResult(new ScheduledTaskTrackingUtilities(t));
         }
