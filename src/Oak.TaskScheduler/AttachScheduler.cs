@@ -1,5 +1,6 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
+using Oak.TaskScheduler.Data;
 using Oak.TaskScheduler.Services;
 
 namespace Oak.TaskScheduler
@@ -17,7 +18,9 @@ namespace Oak.TaskScheduler
             }
 
             serviceCollection.AddHostedService<Scheduler>();
-            serviceCollection.AddSingleton<ITaskHandler, TaskHandler>();
+            serviceCollection.AddSingleton<TaskTrackingData, TaskTrackingData>();
+            serviceCollection.AddTransient<ITaskHandler, TaskHandler>();
+            serviceCollection.AddTransient<IScheduledTaskTrackingRepository, ScheduledTaskTrackingSessionRepository>();
             serviceCollection.AddScoped<ITasksScope, TasksScope>();
             serviceCollection.Configure<SchedulerOptions>(options);
         }

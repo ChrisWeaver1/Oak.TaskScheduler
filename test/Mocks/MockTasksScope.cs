@@ -2,6 +2,7 @@ using Moq;
 using System.Threading;
 using Microsoft.Extensions.DependencyInjection;
 using System.Threading.Tasks;
+using Oak.TaskScheduler.Services;
 
 namespace Oak.TaskScheduler.Test
 {

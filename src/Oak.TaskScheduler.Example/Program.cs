@@ -26,7 +26,7 @@ namespace Oak.TaskScheduler.Example
                     services.AddDbContext<DatabaseContext>();
 
 
-                    services.AttachScheduler();
+                    services.AttachHostedScheduler();
                 });
     }
 }

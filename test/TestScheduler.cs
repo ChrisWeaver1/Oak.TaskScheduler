@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Moq;
 using NUnit.Framework;
+using Oak.TaskScheduler.Services;
 
 namespace Oak.TaskScheduler.Test
 {
@@ -17,7 +18,6 @@ namespace Oak.TaskScheduler.Test
         {
             this.options = new MockOptions();
             this.providers = new MockServiceProvider();
- 
         }
 
         [Test]
@@ -27,7 +27,7 @@ namespace Oak.TaskScheduler.Test
 
             var opts = this.options.Default(new SchedulerOptions 
             {
-                IterationDelayMs = 1000,
+                IterationDelayMs = 100,
                 IterationScopeLimit = 100,
             });
 
@@ -41,7 +41,7 @@ namespace Oak.TaskScheduler.Test
 
             var task = scheduler.Start(token);
             
-            source.CancelAfter(1500);
+            source.CancelAfter(150);
             try
             {
                 await task;
