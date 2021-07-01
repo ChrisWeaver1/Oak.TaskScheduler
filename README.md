@@ -11,50 +11,51 @@ dotnet add package Oak.TaskScheduler
 
 Write your scheduled tasks, implementing the `IScheduledTask` interface:
 ```c#
-    public class Task1 : IScheduledTask
+public class Task1 : IScheduledTask
+{
+    private readonly ILogger<Task1> logger;
+
+    public Task1(ILogger<Task1> logger)
     {
-        private readonly ILogger<Task1> logger;
-
-        public Task1(ILogger<Task1> logger)
-        {
-            this.logger = logger;
-        }
-        
-        // Provide your task with a unique name, this is what we use for tracking the task
-        public string Name => "Task1";
-        
-        // Configure the occurrence of the task, there are a number of different options, see the Occurrence section more details.
-        public IOccurrence Occurrence => new CronOccurrence("*/1 * * * *");
-
-        // Should the task run on start up or wait for the next occurrence
-        public bool RunOnStartUp => false;
-
-        public async Task Run(CancellationToken token = default)
-        {
-            this.logger.LogInformation($"{this.Name} triggered [{this.guid.ToString()}]");
-
-            // ... do stuff
-
-            return;
-        }
+        this.logger = logger;
     }
+
+    // Provide your task with a unique name, this is what we use for tracking the task
+    public string Name => "Task1";
+
+    // Configure the occurrence of the task, there are a number of different options, 
+    // see the Occurrence section more details.
+    public IOccurrence Occurrence => new CronOccurrence("*/1 * * * *");
+
+    // Should the task run on start up or wait for the next occurrence
+    public bool RunOnStartUp => false;
+
+    public async Task Run(CancellationToken token = default)
+    {
+        this.logger.LogInformation($"{this.Name} triggered [{this.guid.ToString()}]");
+
+        // ... do stuff
+
+        return;
+    }
+}
 ```
 
 
 Add & configure your tasks and the scheduler in your startup file: 
 ```c#
-    .ConfigureServices((hostContext, services) =>
-    {
-        // register scheduled tasks, these will be consumed by the scheduler
-        services.AddTransient<IScheduledTask, Task1>();
-        services.AddTransient<IScheduledTask, Task2>();
-        services.AddTransient<IScheduledTask, Task3>();
+.ConfigureServices((hostContext, services) =>
+{
+    // register scheduled tasks, these will be consumed by the scheduler
+    services.AddTransient<IScheduledTask, Task1>();
+    services.AddTransient<IScheduledTask, Task2>();
+    services.AddTransient<IScheduledTask, Task3>();
 
-        // Attach the scheduler
-        // This will register a number of services with the serviceCollection & add the
-        // scheduler class as a Hosted Service
-        services.AttachHostedScheduler();
-    });
+    // Attach the scheduler
+    // This will register a number of services with the serviceCollection & add the
+    // scheduler class as a Hosted Service
+    services.AttachHostedScheduler();
+});
 ```
 
 This was written with `Microsoft.NET.Sdk.Worker` & background service in mind, but can also work in the background of web applications or on the fly aswell.
