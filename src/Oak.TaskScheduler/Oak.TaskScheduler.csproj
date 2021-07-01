@@ -5,7 +5,7 @@
     <PackageId>Oak.TaskScheduler</PackageId>
     <Title>Oak.TaskScheduler</Title>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Authors>Chris (@chrisOaker1)</Authors>
+    <Authors>Chris (@ChrisWeaver1)</Authors>
     <Company>-</Company>
     <PackageProjectUrl>https://github.com/weavc/Oak.TaskScheduler</PackageProjectUrl>
     <Description></Description>
