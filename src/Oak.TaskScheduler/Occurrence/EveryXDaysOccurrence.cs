@@ -2,37 +2,23 @@ using System;
 
 namespace Oak.TaskScheduler
 {
-    public class EveryXDaysOccurrence : IOccurrence
+    public class EveryXDaysOccurrence : TimespanOccurrenceBase, IOccurrence
     {
-
-        private readonly int amount;
-        private readonly int hourOffset;
-        private readonly int minuteOffset;
+        private readonly int days;
+        private readonly TimeSpan offset1;
 
         /// <summary>
-        /// Run task every X days
+        /// Run once every X days
         /// </summary>
-        /// <param name="amount">Number of time units</param>
-        /// <param name="hourOffset">Offset hours by this amount. To run at 8am, pass through 8</param>
-        /// <param name="minuteOffset">Offset minutes by this amount. To run at 25 minutes past the hour, you would pass in 25</param>
-        public EveryXDaysOccurrence(int amount, int hourOffset = 0, int minuteOffset = 0)
+        /// <param name="days">Number of days between occurrences</param>
+        public EveryXDaysOccurrence(int days, int hoursOffset = 0, int minutesOffset = 0, int secondsOffset = 0) 
         {
-            this.hourOffset = hourOffset;
-            this.minuteOffset = minuteOffset;
-            this.amount = amount;
+            this.days = days;
+            this.offset1 = new TimeSpan(hoursOffset , minutesOffset, secondsOffset);
         }
 
-        public DateTime Next(DateTime from)
-        {
-            return this.days(from);
-        }
-
-        private DateTime days(DateTime from)
-        {
-            var next = new DateTime(from.Year, from.Month, 0, this.hourOffset, this.minuteOffset, 0);
-            var days = (from.Day - (from.Day % this.amount)) + this.amount;
-            return next.AddDays(days);   
-        }
+        protected override TimeSpan timespan => new TimeSpan(this.days, 0, 0, 0);
+        protected override TimeSpan offset => this.offset1;
     }
 }
 

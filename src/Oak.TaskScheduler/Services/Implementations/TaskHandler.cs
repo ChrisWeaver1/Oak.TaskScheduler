@@ -7,9 +7,6 @@ using Oak.TaskScheduler.Models;
 
 namespace Oak.TaskScheduler.Services
 {
-    /// <summary>
-    /// Tracks & executes individual tasks
-    /// </summary>
     public class TaskHandler : ITaskHandler
     {
         private readonly ILogger<TaskHandler> logger;
@@ -21,10 +18,7 @@ namespace Oak.TaskScheduler.Services
             this.logger = logger;
         }
 
-        /// <summary>
-        /// Check, track & execute tasks if its time to
-        /// </summary>
-        public async Task ExecuteTask(IScheduledTask task, CancellationToken token = default)
+        public virtual async Task ExecuteTask(IScheduledTask task, CancellationToken token = default)
         {
             var tracker = this.retrieveTracker(task);
 

@@ -10,10 +10,6 @@ using Microsoft.Extensions.Options;
 
 namespace Oak.TaskScheduler.Services
 {
-    /// <summary>
-    /// Scheduler background service. Handles asyncronous & concurrent execution of tasks 
-    /// with a new service scope being created each passthrough.
-    /// </summary>
     public class Scheduler : BackgroundService, IScheduler
     {
         private readonly IServiceProvider serviceProvider;
@@ -30,13 +26,7 @@ namespace Oak.TaskScheduler.Services
             this.options = options;
         }
 
-        /// <summary>
-        /// Action called on each iteration of loop
-        /// </summary>
         public Action OnIteration  { get; set; } = null;
-        /// <summary>
-        /// Action to be called when the scope limit is reached
-        /// </summary>
         public Action OnIterationScopesLimit { get; set; } = null;
 
 
@@ -44,10 +34,6 @@ namespace Oak.TaskScheduler.Services
         private bool stop = false;
         private CancellationToken stoppingToken;
 
-
-        /// <summary>
-        /// Start the scheduler
-        /// </summary>
         public async Task Start(CancellationToken token)
         {
             this.stop = false;
@@ -55,6 +41,7 @@ namespace Oak.TaskScheduler.Services
 
             while (!this.stoppingToken.IsCancellationRequested && !this.stop)
             {
+                var startIter = DateTime.UtcNow;
                 this.OnIteration?.Invoke();
 
                 if (this.activeTasks.Count > this.options.Value.IterationScopeLimit)
@@ -65,8 +52,8 @@ namespace Oak.TaskScheduler.Services
                     this.OnIterationScopesLimit?.Invoke();
 
                     this.logger.LogCritical($"Scheduler exceeeded loop execution limit of {this.options.Value.IterationScopeLimit}");
-                    await Task.Delay(this.options.Value.IterationDelayMs, this.stoppingToken);
-                    this.cleanActiveTasks();
+
+                    await this.endIteration(startIter);
                     continue;
                 }
 
@@ -84,16 +71,10 @@ namespace Oak.TaskScheduler.Services
                     this.logger.LogError(ex.ToString());
                 }
 
-                await Task.Delay(this.options.Value.IterationDelayMs, this.stoppingToken);
-
-                this.cleanActiveTasks();
+                await this.endIteration(startIter);
             }
         }
 
-        /// <summary>
-        /// Break after finishing next loop iteration,
-        /// If you want to force stop the tasks, cancel the CancellationToken 
-        /// </summary>
         public void Stop()
         {
             this.stop = true;
@@ -103,6 +84,24 @@ namespace Oak.TaskScheduler.Services
         {
             this.logger.LogInformation("Scheduler started at: {time}", DateTime.UtcNow);
             await this.Start(stoppingToken);
+        }
+
+        private async Task endIteration(DateTime start)
+        {
+            var end = DateTime.UtcNow;
+            int delayMs = this.options.Value.IterationDelayMs;
+            if (this.options.Value.IncludeRuntimeInDelay)
+            {
+                var span = (end - start).Milliseconds;
+                delayMs -= span;
+            }
+
+            if (delayMs <= 0)
+                return;
+
+            await Task.Delay(delayMs, this.stoppingToken);
+
+            this.cleanActiveTasks();
         }
 
         private void cleanActiveTasks()

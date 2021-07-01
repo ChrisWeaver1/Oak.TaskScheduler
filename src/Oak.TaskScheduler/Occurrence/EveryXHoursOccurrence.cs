@@ -2,34 +2,23 @@ using System;
 
 namespace Oak.TaskScheduler
 {
-    public class EveryXHoursOccurrence : IOccurrence
+    public class EveryXHoursOccurrence : TimespanOccurrenceBase, IOccurrence
     {
-
-        private readonly int amount;
-        private readonly int minuteOffset;
+        private readonly int hours;
+        private readonly TimeSpan offset1;
 
         /// <summary>
-        /// Run task every X hours
+        /// Run once every X hours
         /// </summary>
-        /// <param name="amount">Number of time units</param>
-        /// <param name="minuteOffset">Offset minutes by this amount. To run at 25 minutes past the hour, you would pass in 25</param>
-        public EveryXHoursOccurrence(int hours, int minuteOffset = 0)
+        /// <param name="hours">Number of hours between occurrences</param>
+        public EveryXHoursOccurrence(int hours, int minutesOffset = 0, int secondsOffset = 0) 
         {
-            this.minuteOffset = minuteOffset;
-            this.amount = hours;
+            this.hours = hours;
+            this.offset1 = new TimeSpan(0 , minutesOffset, secondsOffset);
         }
 
-        public DateTime Next(DateTime from)
-        {
-            return this.hours(from);
-        }
-
-        private DateTime hours(DateTime from)
-        {
-            var next = new DateTime(from.Year, from.Month, from.Day, 0, this.minuteOffset, 0);
-            var hours = (from.Hour - (from.Hour % this.amount)) + this.amount;
-            return next.AddHours(hours);
-        }
+        protected override TimeSpan timespan => new TimeSpan(this.hours, 0, 0);
+        protected override TimeSpan offset => this.offset1;
     }
 }
 

@@ -2,31 +2,23 @@ using System;
 
 namespace Oak.TaskScheduler
 {
-    public class EveryXMinutesOccurrence : IOccurrence
+    public class EveryXMinutesOccurrence : TimespanOccurrenceBase, IOccurrence
     {
-
-        private readonly int amount;
+        private readonly int minutes;
+        private readonly TimeSpan offset1;
 
         /// <summary>
         /// Run once every X minutes
         /// </summary>
         /// <param name="minutes">Number of minutes between occurrences</param>
-        public EveryXMinutesOccurrence(int minutes)
+        public EveryXMinutesOccurrence(int minutes, int secondsOffset = 0) 
         {
-            this.amount = minutes;
+            this.minutes = minutes;
+            this.offset1 = new TimeSpan(0 , 0, secondsOffset);
         }
 
-        public DateTime Next(DateTime from)
-        {
-            return this.minutes(from);
-        }
-        
-        private DateTime minutes(DateTime from)
-        {
-            var next = new DateTime(from.Year, from.Month, from.Day, from.Hour, 0, 0);
-            var minutes = (from.Minute - (from.Minute % this.amount)) + this.amount;
-            return next.AddMinutes(minutes);
-        }
+        protected override TimeSpan timespan => new TimeSpan(0, this.minutes, 0);
+        protected override TimeSpan offset => this.offset1;
     }
 }
 

@@ -7,10 +7,6 @@ using Microsoft.Extensions.Logging;
 
 namespace Oak.TaskScheduler.Services
 {
-    /// <summary>
-    /// Handles execution of a new task set in a new service scope.
-    /// This will run through each of the tasks & pass them through to the TaskHandler
-    /// </summary>
     public class TasksScope : ITasksScope
     {
         private readonly ILogger<TasksScope> logger;
@@ -32,11 +28,7 @@ namespace Oak.TaskScheduler.Services
 
         private List<Task> activeTasks = new List<Task>();
 
-
-        /// <summary>
-        /// Handle the task set in this service scope
-        /// </summary>
-        public async Task Handle(IServiceScope scope, CancellationToken token = default)
+        public virtual async Task Handle(IServiceScope scope, CancellationToken token = default)
         {
             this.logger.LogInformation($"Task Set {this.guid.ToString()} Started");
 
