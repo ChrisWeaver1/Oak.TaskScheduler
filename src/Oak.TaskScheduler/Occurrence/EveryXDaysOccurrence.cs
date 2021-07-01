@@ -4,21 +4,17 @@ namespace Oak.TaskScheduler
 {
     public class EveryXDaysOccurrence : TimespanOccurrenceBase, IOccurrence
     {
-        private readonly int days;
-        private readonly TimeSpan offset1;
-
         /// <summary>
-        /// Run once every X days
+        /// Set a number of days between occurrences
         /// </summary>
         /// <param name="days">Number of days between occurrences</param>
+        /// <param name="hoursOffset">Offset the hours by this amount. Example: 1 day with a 3 hour offset would return values at 3AM every day, rather than at midnight.</param>
+        /// <param name="minutesOffset">Offset the minutes by this amount. Example: 1 hour with a 30 minute offset would return values 30 minutes after each hour, rather than on the hour.</param>
+        /// <param name="secondsOffset">Offset the seconds by this amount. Example: 1 minute with a 30 second offset would return values 30 seconds after the minute, rather than on the minute.</param>
         public EveryXDaysOccurrence(int days, int hoursOffset = 0, int minutesOffset = 0, int secondsOffset = 0) 
         {
-            this.days = days;
-            this.offset1 = new TimeSpan(hoursOffset , minutesOffset, secondsOffset);
+            this.setValues(new TimeSpan(days, 0, 0, 0), new TimeSpan(hoursOffset, minutesOffset, secondsOffset));
         }
-
-        protected override TimeSpan timespan => new TimeSpan(this.days, 0, 0, 0);
-        protected override TimeSpan offset => this.offset1;
     }
 }
 

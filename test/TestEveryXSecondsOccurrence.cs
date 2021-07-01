@@ -59,7 +59,7 @@ namespace Oak.TaskScheduler.Test
             Assert.AreEqual(new DateTime(2020, 12, 31, 23, 59, 40), t3);
 
             var t4 = occurance.Next(new DateTime(2021, 1, 1, 0, 0, 59));
-            Assert.AreEqual(new DateTime(2021, 1, 1, 0, 0, 0), t4);
+            Assert.AreEqual(new DateTime(2021, 1, 1, 0, 1, 0), t4);
 
             var t5 = occurance.Next(new DateTime(2020, 12, 31, 23, 59, 50));
             Assert.AreEqual(new DateTime(2021, 1, 1, 0, 0, 0), t5);

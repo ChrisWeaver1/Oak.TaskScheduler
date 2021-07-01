@@ -4,21 +4,15 @@ namespace Oak.TaskScheduler
 {
     public class EveryXMinutesOccurrence : TimespanOccurrenceBase, IOccurrence
     {
-        private readonly int minutes;
-        private readonly TimeSpan offset1;
-
         /// <summary>
-        /// Run once every X minutes
+        /// Set a number of minutes between occurrences
         /// </summary>
         /// <param name="minutes">Number of minutes between occurrences</param>
+        /// <param name="secondsOffset">Offset the seconds by this amount. Example: 1 minute with a 30 second offset would return values 30 seconds after the minute, rather than on the minute.</param>
         public EveryXMinutesOccurrence(int minutes, int secondsOffset = 0) 
         {
-            this.minutes = minutes;
-            this.offset1 = new TimeSpan(0 , 0, secondsOffset);
+            base.setValues(new TimeSpan(0, minutes, 0), new TimeSpan(0, 0, secondsOffset));
         }
-
-        protected override TimeSpan timespan => new TimeSpan(0, this.minutes, 0);
-        protected override TimeSpan offset => this.offset1;
     }
 }
 

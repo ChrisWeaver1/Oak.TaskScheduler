@@ -4,18 +4,14 @@ namespace Oak.TaskScheduler
 {
     public class EveryXSecondsOccurrence : TimespanOccurrenceBase, IOccurrence
     {
-        private readonly int seconds;
-
         /// <summary>
-        /// Run once every X seconds
+        /// Set a number of seconds between occurrences
         /// </summary>
         /// <param name="seconds">Number of seconds between occurrences</param>
         public EveryXSecondsOccurrence(int seconds) 
         {
-            this.seconds = seconds;
+            base.setValues(new TimeSpan(0, 0, seconds));
         }
-
-        protected override TimeSpan timespan => new TimeSpan(0, 0, this.seconds);
     }
 }
 

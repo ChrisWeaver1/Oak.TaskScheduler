@@ -4,22 +4,15 @@ namespace Oak.TaskScheduler
 {
     public class TimespanOccurrence : TimespanOccurrenceBase, IOccurrence
     {
-        private readonly TimeSpan timespan1;
-        private readonly TimeSpan offset1;
-
         /// <summary>
-        /// Run once every X seconds
+        /// Set a timespan between occurrences
         /// </summary>
-        /// <param name="seconds">Number of seconds between occurrences</param>
-        public TimespanOccurrence(TimeSpan timespan1, TimeSpan offset1 = default) 
+        /// <param name="timespan">Timespan between occurrences</param>
+        /// <param name="offset">Offset the time by this value. With a timespan of 1 hour & a offset of 30 minutes, this would return values at 30 minutes past every hour.</param>
+        public TimespanOccurrence(TimeSpan timespan, TimeSpan offset = default) 
         {
-            this.timespan1 = timespan1;
-            this.offset1 = offset1;
+            base.setValues(timespan, offset);
         }
-
-        protected override TimeSpan timespan => this.timespan1;
-        protected override TimeSpan offset => this.offset1;
-
     }
 }
 
