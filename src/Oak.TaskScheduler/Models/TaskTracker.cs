@@ -2,7 +2,7 @@ using System;
 
 namespace Oak.TaskScheduler.Models
 {
-    internal class TaskTracker
+    public class TaskTracker
     {
         public DateTime? LastStarted { get; set; }
         public DateTime? LastCompleted { get; set; }

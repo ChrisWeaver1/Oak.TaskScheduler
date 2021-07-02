@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Oak.TaskScheduler.Example
 {
-    public class Task2 : IScheduledTask, IOccurrence
+    public class Task2 : IScheduledTask
     {
         private readonly ILogger<Task2> logger;
         private Guid guid { get; set; }
@@ -18,11 +18,11 @@ namespace Oak.TaskScheduler.Example
 
         public string Name => "Task2";
 
-        public string Cron => "";
-
-        public IOccurrence Occurrence => this;
+        public IOccurrence Occurrence => new EveryXDaysOccurrence(1, 16);
 
         public bool RunOnStartUp => true;
+
+        public Guid Id { get; set; }
 
         public async Task Run(CancellationToken token = default)
         {
@@ -31,11 +31,6 @@ namespace Oak.TaskScheduler.Example
             await Task.Delay(25000, token);
 
             return;
-        }
-
-        public DateTime Next(DateTime from)
-        {
-            return from.Date.AddDays(1);
         }
     }
 }

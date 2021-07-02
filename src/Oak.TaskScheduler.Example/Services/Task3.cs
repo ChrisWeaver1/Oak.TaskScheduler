@@ -19,18 +19,16 @@ namespace Oak.TaskScheduler.Example
             this.guid = Guid.NewGuid();
         }
 
-        public string Name => "Task3";
         public IOccurrence Occurrence => new CronOccurrence("*/1 * * * *");
-
         public bool RunOnStartUp => true;
 
         public async Task Run(CancellationToken token = default)
         {
-            this.logger.LogInformation($"{this.Name} triggered [{this.guid.ToString()}]");
+            this.logger.LogInformation($"{this.GetType().ToString()} triggered [{this.guid.ToString()}]");
 
             await context.Log.AddAsync(new Log
             {
-                Identifier = this.Name,
+                Identifier = this.GetType().ToString(),
                 Date = DateTime.Now
             });
 

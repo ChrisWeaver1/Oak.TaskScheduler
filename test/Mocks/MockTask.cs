@@ -12,7 +12,6 @@ namespace Oak.TaskScheduler.Test
         {
             var mock = new Mock<IScheduledTask>();
 
-            mock.Setup(m => m.Name).Returns("Default");
             mock.Setup(m => m.RunOnStartUp).Returns(false);
             mock.Setup(m => m.Run(It.IsNotNull<CancellationToken>())).Returns(Task.CompletedTask);
             mock.Setup(m => m.Occurrence.Next(It.IsAny<DateTime>())).Returns((DateTime d) => { return d.AddMinutes(1); });
@@ -23,7 +22,6 @@ namespace Oak.TaskScheduler.Test
         {
             var mock = new Mock<IScheduledTask>();
 
-            mock.Setup(m => m.Name).Returns("Daily");
             mock.Setup(m => m.RunOnStartUp).Returns(false);
             mock.Setup(m => m.Run(It.IsNotNull<CancellationToken>())).Returns(async (CancellationToken c) => { await Task.Delay(2000); return; });
             mock.Setup(m => m.Occurrence.Next(It.IsAny<DateTime>())).Returns((DateTime d) => { return d.Date.AddDays(1).AddHours(4); });
@@ -34,7 +32,6 @@ namespace Oak.TaskScheduler.Test
         {
             var mock = new Mock<IScheduledTask>();
 
-            mock.Setup(m => m.Name).Returns("Startup");
             mock.Setup(m => m.RunOnStartUp).Returns(true);
             mock.Setup(m => m.Run(It.IsNotNull<CancellationToken>())).Returns(Task.CompletedTask);
             mock.Setup(m => m.Occurrence.Next(It.IsAny<DateTime>())).Returns((DateTime d) => { return d.AddMinutes(1); });

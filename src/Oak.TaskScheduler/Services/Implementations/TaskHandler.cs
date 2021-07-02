@@ -28,7 +28,7 @@ namespace Oak.TaskScheduler.Services
             tracker.TaskStarted(DateTime.UtcNow);
             tracker.NextRun = this.getNextRun(task, tracker.LastStarted ?? DateTime.UtcNow);
 
-            this.logger.LogInformation($"Task Started: {task.Name} [Predicted start: {tracker.NextRun.ToString()}]");
+            this.logger.LogInformation($"Task Started: {task.GetName()} [Predicted start: {tracker.NextRun.ToString()}]");
 
             try
             {
@@ -49,7 +49,7 @@ namespace Oak.TaskScheduler.Services
         private void completeTask(IScheduledTask task, ref TaskTracker tracker)
         {
             tracker.TaskCompleted(DateTime.UtcNow);
-            this.logger.LogInformation($"Task Finished: {task.Name} [Completed: {tracker.Completed}, Errors: {tracker.Errors}, Average: {tracker.AverageRunTime.ToString()}, Next: {tracker.NextRun.ToString()}]");
+            this.logger.LogInformation($"Task Finished: {task.GetName()} [Completed: {tracker.Completed}, Errors: {tracker.Errors}, Average: {tracker.AverageRunTime.ToString()}, Next: {tracker.NextRun.ToString()}]");
 
             return;
         }
@@ -57,7 +57,7 @@ namespace Oak.TaskScheduler.Services
         private void taskError(IScheduledTask task, ref TaskTracker tracker)
         {
             tracker.TaskErrored(DateTime.UtcNow);
-            this.logger.LogInformation($"Task Errored: {task.Name} [Completed: {tracker.Completed}, Errors: {tracker.Errors}, Average: {tracker.AverageRunTime.ToString()}, Next: {tracker.NextRun.ToString()}]");
+            this.logger.LogInformation($"Task Errored: {task.GetName()} [Completed: {tracker.Completed}, Errors: {tracker.Errors}, Average: {tracker.AverageRunTime.ToString()}, Next: {tracker.NextRun.ToString()}]");
 
             return;
         }
@@ -73,7 +73,7 @@ namespace Oak.TaskScheduler.Services
             if (tracker.IsRunning)
             {
                 tracker.NextRun = this.getNextRun(task, DateTime.UtcNow);
-                this.logger.LogWarning($"Task not finished, skipping run: {task.Name} [LastStart: {tracker.LastStarted.Value.ToString()}, NextRun: {tracker.NextRun.ToString()}]");
+                this.logger.LogWarning($"Task not finished, skipping run: {task.GetName()} [LastStart: {tracker.LastStarted.Value.ToString()}, NextRun: {tracker.NextRun.ToString()}]");
                 return false;
             }
 
@@ -82,7 +82,7 @@ namespace Oak.TaskScheduler.Services
 
         private TaskTracker retrieveTracker(IScheduledTask task)
         {
-            var tracker = this.tasks.GetValueOrDefault(task.Name);
+            var tracker = this.tasks.GetValueOrDefault(task.GetName());
 
             if (tracker == null)
             {
@@ -91,7 +91,7 @@ namespace Oak.TaskScheduler.Services
                     NextRun = this.getNextRun(task, DateTime.UtcNow),
                 };
 
-                this.tasks.Add(task.Name, tracker);
+                this.tasks.Add(task.GetName(), tracker);
             }
 
             return tracker;
