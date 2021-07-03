@@ -20,9 +20,6 @@ public class Task1 : IScheduledTask
         this.logger = logger;
     }
 
-    // Provide your task with a unique name, this is what we use for tracking the task
-    public string Name => "Task1";
-
     // Configure the occurrence of the task, there are a number of different options, 
     // see the Occurrence section more details.
     public IOccurrence Occurrence => new CronOccurrence("*/1 * * * *");
@@ -40,7 +37,6 @@ public class Task1 : IScheduledTask
     }
 }
 ```
-
 
 Add & configure your tasks and the scheduler in your startup file: 
 ```c#
