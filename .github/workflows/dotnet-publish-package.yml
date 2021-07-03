@@ -1,4 +1,4 @@
-name: Publish
+name: Dotnet Publish Package
 
 on:
   release:
