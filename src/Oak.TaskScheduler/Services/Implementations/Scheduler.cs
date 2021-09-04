@@ -90,11 +90,9 @@ namespace Oak.TaskScheduler.Services
         {
             var end = DateTime.UtcNow;
             int delayMs = this.options.Value.IterationDelayMs;
+            
             if (this.options.Value.IncludeRuntimeInDelay)
-            {
-                var span = (end - start).Milliseconds;
-                delayMs -= span;
-            }
+                delayMs -= (end - start).Milliseconds;
 
             if (delayMs <= 0)
                 return;

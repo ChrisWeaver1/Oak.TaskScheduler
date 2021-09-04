@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
@@ -10,11 +11,11 @@ namespace Oak.TaskScheduler.Services
     public class TaskHandler : ITaskHandler
     {
         private readonly ILogger<TaskHandler> logger;
-        private Dictionary<string, TaskTracker> tasks { get; set; }
+        private ConcurrentDictionary<string, TaskTracker> tasks { get; set; }
 
         public TaskHandler(ILogger<TaskHandler> logger)
         {
-            this.tasks = new Dictionary<string, TaskTracker>();
+            this.tasks = new ConcurrentDictionary<string, TaskTracker>();
             this.logger = logger;
         }
 
@@ -38,10 +39,14 @@ namespace Oak.TaskScheduler.Services
             {
                 this.logger.LogError(ex.ToString());
                 this.taskError(task, ref tracker);
+                this.updateTasks(task, tracker);
+
                 return;
             }
 
             this.completeTask(task, ref tracker);
+
+            this.updateTasks(task, tracker);
 
             return;
         }
@@ -91,7 +96,7 @@ namespace Oak.TaskScheduler.Services
                     NextRun = this.getNextRun(task, DateTime.UtcNow),
                 };
 
-                this.tasks.Add(task.GetName(), tracker);
+                this.updateTasks(task, tracker);
             }
 
             return tracker;
@@ -100,6 +105,18 @@ namespace Oak.TaskScheduler.Services
         private DateTime getNextRun(IScheduledTask task, DateTime lastRun)
         {
             return task.Occurrence.Next(lastRun);
+        }
+
+        private bool updateTasks(IScheduledTask task, TaskTracker tracker)
+        {
+            this.tasks.AddOrUpdate(task.GetName(), tracker, (name, _tracker) => 
+            { 
+                if (!this.tasks.TryUpdate(task.GetName(), tracker, _tracker))
+                    this.logger.LogInformation("Failed to update dict"); 
+                return tracker;
+            });
+
+            return true;
         }
     }
 }

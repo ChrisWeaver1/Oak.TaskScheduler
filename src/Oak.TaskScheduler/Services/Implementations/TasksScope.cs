@@ -33,9 +33,7 @@ namespace Oak.TaskScheduler.Services
             this.logger.LogInformation($"Task Set {this.guid.ToString()} Started");
 
             foreach (var task in tasks)
-            {
                 this.activeTasks.Add(this.taskHandler.ExecuteTask(task, token));
-            }
 
             await Task.WhenAll(this.activeTasks);
             scope.Dispose();
