@@ -28,8 +28,8 @@ namespace Oak.TaskScheduler.Example
 
             await Task.Delay(2000, token);
 
-            throw new Exception("!");
-
+            //throw new Exception("!");
+            
             return;
         }
     }
